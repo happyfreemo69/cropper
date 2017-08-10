@@ -2,6 +2,8 @@ window.onload = function () {
 
   'use strict';
 
+  var immeubleLogoSize = {width: 610, height:175};
+  var drawerLogoSize = {width: 52, height:52};
   var Cropper = window.Cropper;
   var URL = window.URL || window.webkitURL;
   var container = document.querySelector('.img-container');
@@ -16,28 +18,28 @@ window.onload = function () {
   var dataRotate = document.getElementById('dataRotate');
   var dataScaleX = document.getElementById('dataScaleX');
   var dataScaleY = document.getElementById('dataScaleY');
-  var downloadSize = {width:610, height:175};
+  var downloadSize = immeubleLogoSize;
   var options = {
-        aspectRatio: 610 / 175,
+        aspectRatio: immeubleLogoSize.width / immeubleLogoSize.height,
         preview: '.img-preview',
         ready: function (e) {
-          console.log(e.type);
+          //console.log(e.type);
           downloadDirect.href = cropper.getCroppedCanvas(downloadSize).toDataURL('image/png');
         },
         cropstart: function (e) {
-          console.log(e.type, e.detail.action);
+          //console.log(e.type, e.detail.action);
         },
         cropmove: function (e) {
-          console.log(e.type, e.detail.action);
+          //console.log(e.type, e.detail.action);
         },
         cropend: function (e) {
-          console.log(e.type, e.detail.action);
+          //console.log(e.type, e.detail.action);
           downloadDirect.href = cropper.getCroppedCanvas(downloadSize).toDataURL('image/png');
         },
         crop: function (e) {
           var data = e.detail;
 
-          console.log(e.type);
+          //console.log(e.type);
           //dataX.value = Math.round(data.x);
           //dataY.value = Math.round(data.y);
           //dataHeight.value = Math.round(data.height);
@@ -47,7 +49,7 @@ window.onload = function () {
           //dataScaleY.value = typeof data.scaleY !== 'undefined' ? data.scaleY : '';
         },
         zoom: function (e) {
-          console.log(e.type, e.detail.ratio);
+          //console.log(e.type, e.detail.ratio);
         }
       };
   var cropper = new Cropper(image, options);
@@ -109,7 +111,7 @@ window.onload = function () {
       } else {
         options[target.name] = target.value;
         if(target.name == "aspectRatio" && target.value=="1"){
-          console.log('round');
+          //console.log('round');
           if(document.getElementById('styleRound') == null) {
             var style = document.createElement('style');
             style.setAttribute('id','styleRound');
@@ -127,10 +129,9 @@ window.onload = function () {
           previews.insertBefore(preview, previews.firstChild);
 
           var showCanvas = document.getElementById("showCanvas");
-          showCanvas.setAttribute('data-option','{ "width": 52, "height": 52 }');
-          showCanvas.childNodes[1].textContent = "52x52";
-          downloadSize.width = 52;
-          downloadSize.height = 52;
+          showCanvas.setAttribute('data-option', JSON.stringify(drawerLogoSize));
+          showCanvas.childNodes[1].textContent = ""+drawerLogoSize.width+"x"+drawerLogoSize.height;
+          downloadSize = drawerLogoSize;
 
         } else if(target.name == "aspectRatio"){
           document.getElementById("styleRound").remove();
@@ -144,13 +145,12 @@ window.onload = function () {
           previews.insertBefore(preview, previews.firstChild);
 
           var showCanvas = document.getElementById("showCanvas");
-          showCanvas.setAttribute('data-option','{ "width": 610, "height": 175 }');
-          showCanvas.childNodes[1].textContent = "610x175";
-          downloadSize.width = 610;
-          downloadSize.height = 175;
+          showCanvas.setAttribute('data-option',JSON.stringify(immeubleLogoSize));
+          showCanvas.childNodes[1].textContent = ""+immeubleLogoSize.width+"x"+immeubleLogoSize.height;
+          downloadSize = immeubleLogoSize;
         }
         options.ready = function () {
-          console.log('ready');
+          //console.log('ready');
           downloadDirect.href = cropper.getCroppedCanvas(downloadSize).toDataURL('image/png');
         };
       }
