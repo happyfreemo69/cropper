@@ -150,6 +150,23 @@ label.btn {
   height: 4.5rem;
 }
 
+.preview-immeuble {
+  width: 8rem;
+  height: 4.5rem;
+  position:absolute;
+  top:65px;
+  left:30px;
+}
+
+.preview-drawer {
+  width: 1.6rem;
+  height: 1.6rem;
+  position:absolute;
+  border-radius: 50%;
+  top:369px;
+  left:23px;
+}
+
 .preview-sm {
   width: 4rem;
   height: 2.25rem;

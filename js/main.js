@@ -16,11 +16,13 @@ window.onload = function () {
   var dataRotate = document.getElementById('dataRotate');
   var dataScaleX = document.getElementById('dataScaleX');
   var dataScaleY = document.getElementById('dataScaleY');
+  var downloadSize = {width:610, height:175};
   var options = {
         aspectRatio: 610 / 175,
         preview: '.img-preview',
         ready: function (e) {
           console.log(e.type);
+          downloadDirect.href = cropper.getCroppedCanvas(downloadSize).toDataURL('image/png');
         },
         cropstart: function (e) {
           console.log(e.type, e.detail.action);
@@ -30,6 +32,7 @@ window.onload = function () {
         },
         cropend: function (e) {
           console.log(e.type, e.detail.action);
+          downloadDirect.href = cropper.getCroppedCanvas(downloadSize).toDataURL('image/png');
         },
         crop: function (e) {
           var data = e.detail;
@@ -42,8 +45,6 @@ window.onload = function () {
           //dataRotate.value = typeof data.rotate !== 'undefined' ? data.rotate : '';
           //dataScaleX.value = typeof data.scaleX !== 'undefined' ? data.scaleX : '';
           //dataScaleY.value = typeof data.scaleY !== 'undefined' ? data.scaleY : '';
-          var uploadedImageType = 'image/png';
-          downloadDirect.href = cropper.getCroppedCanvas({ width: 610, height: 175 }).toDataURL('image/jpeg');
         },
         zoom: function (e) {
           console.log(e.type, e.detail.ratio);
@@ -107,8 +108,50 @@ window.onload = function () {
         };
       } else {
         options[target.name] = target.value;
+        if(target.name == "aspectRatio" && target.value=="1"){
+          console.log('round');
+          if(document.getElementById('styleRound') == null) {
+            var style = document.createElement('style');
+            style.setAttribute('id','styleRound');
+            style.type = 'text/css';
+            style.innerHTML = '.cropper-view-box,.cropper-face {border-radius: 50%;}';
+            document.getElementsByTagName('head')[0].appendChild(style);
+          }
+
+          document.getElementById('appView').setAttribute('src','images/DRAWER_V2.1.png');
+          document.getElementById('preview-appView').remove();
+          var preview = document.createElement('div');
+          preview.setAttribute('id', 'preview-appView');
+          preview.setAttribute('class','img-preview preview-drawer');
+          var previews = document.getElementById('previews');
+          previews.insertBefore(preview, previews.firstChild);
+
+          var showCanvas = document.getElementById("showCanvas");
+          showCanvas.setAttribute('data-option','{ "width": 52, "height": 52 }');
+          showCanvas.childNodes[1].textContent = "52x52";
+          downloadSize.width = 52;
+          downloadSize.height = 52;
+
+        } else if(target.name == "aspectRatio"){
+          document.getElementById("styleRound").remove();
+          document.getElementById('appView').setAttribute('src','images/FICHE_IMMEUBLE.png');
+
+          document.getElementById('preview-appView').remove();
+          var preview = document.createElement('div');
+          preview.setAttribute('id', 'preview-appView');
+          preview.setAttribute('class','img-preview preview-immeuble');
+          var previews = document.getElementById('previews');
+          previews.insertBefore(preview, previews.firstChild);
+
+          var showCanvas = document.getElementById("showCanvas");
+          showCanvas.setAttribute('data-option','{ "width": 610, "height": 175 }');
+          showCanvas.childNodes[1].textContent = "610x175";
+          downloadSize.width = 610;
+          downloadSize.height = 175;
+        }
         options.ready = function () {
           console.log('ready');
+          downloadDirect.href = cropper.getCroppedCanvas(downloadSize).toDataURL('image/png');
         };
       }
 

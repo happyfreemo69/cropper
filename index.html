@@ -107,8 +107,8 @@
           </label>
         </div>
 
-          <button type="button" class="btn btn-primary" data-method="getCroppedCanvas" data-option="{ &quot;width&quot;: 610, &quot;height&quot;: 175 }">
-            <span class="docs-tooltip" data-toggle="tooltip" title="cropper.getCroppedCanvas({ width: 610, height: 175 })">
+          <button id="showCanvas" type="button" class="btn btn-primary" data-method="getCroppedCanvas" data-option="{ &quot;width&quot;: 610, &quot;height&quot;: 175 }">
+            <span class="docs-tooltip" data-toggle="tooltip" title="Show canvas">
               610&times;175
             </span>
           </button>
@@ -130,7 +130,7 @@
           </div>
         </div><!-- /.modal -->
 
-         <a class="btn btn-primary" id="downloadDirect" href="javascript:void(0);" download="cropped.jpg">Download</a>
+         <a class="btn btn-primary" id="downloadDirect" href="javascript:void(0);" download="cropped.png">Download</a>
 
         <button type="button" class="btn btn-primary" data-method="zoomTo" data-option="1">
           <span class="docs-tooltip" data-toggle="tooltip" title="cropper.zoomTo(1)">
@@ -142,6 +142,20 @@
 
       <div class="col-md-3 docs-toggles">
         <!-- <h3>Toggles:</h3> -->
+        <div class="btn-group docs-aspect-ratios" data-toggle="buttons">
+          <label class="btn btn-primary active">
+            <input type="radio" class="sr-only" id="aspectRatio1" name="aspectRatio" value="3.48571428571">
+            <span class="docs-tooltip" data-toggle="tooltip" title="aspectRatio: 610 / 175">
+              610x175
+            </span>
+          </label>
+          <label class="btn btn-primary">
+            <input type="radio" class="sr-only" id="aspectRatio2" name="aspectRatio" value="1">
+            <span class="docs-tooltip" data-toggle="tooltip" title="aspectRatio: 1 / 1">
+              52x52
+            </span>
+          </label>
+        </div>
       </div><!-- /.docs-toggles -->
     </div>
     <div class="row">
@@ -153,9 +167,9 @@
       </div>
       <div class="col-md-3">
         <!-- <h3>Preview:</h3> -->
-        <div class="docs-preview clearfix">
-          <div class="img-preview preview-md" style="position:absolute; top:65px; left:30px;"></div>
-          <img src="images/FICHE_IMMEUBLE.png" style="width:100%; height:auto;"/>
+        <div id="previews" class="docs-preview clearfix">
+          <div id="preview-appView" class="img-preview preview-immeuble"></div>
+          <img id="appView" src="images/FICHE_IMMEUBLE.png" style="width:100%; height:auto;"/>
         </div>
 
         <!-- <h3>Data:</h3>
